@@ -14,11 +14,18 @@ import PressMarquee from './components/PressMarquee';
 import Footer from './components/Footer';
 import SoftAurora from './components/SoftAurora';
 import TrueFocus from './components/TrueFocus';
+import Seo from './components/Seo';
 import { Download, Sparkles, ShieldCheck, HeartHandshake } from 'lucide-react';
 
 export default function App() {
   return (
     <SmoothScroll>
+      <Seo
+        title="UniMates — #1 Roommate & Flatmate Matching App for Students"
+        description="Swipe right for verified university flatmates, safe student accommodations, and thriving youth communities in Ioannina and across Greece."
+        keywords="UniMates, flatmate matching, roommate finder, university students, housing Ioannina, Greece student accommodation, roommate app"
+        url="https://unimates.net/"
+      />
       <div className="min-h-screen flex flex-col bg-[#f9f6f0] text-[#0a1628] selection:bg-[#df4f00] selection:text-white font-sans relative overflow-x-hidden">
         {/* React Bits Idea #2: Soft Aurora Ambient Light Field */}
         <SoftAurora />
