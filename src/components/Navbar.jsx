@@ -13,66 +13,89 @@ export default function Navbar() {
   ];
 
   return (
-    <header className="fixed top-0 inset-x-0 z-50 bg-white/80 backdrop-blur-md border-b border-zinc-200/60 transition-colors">
-      <nav className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-        {/* Logo */}
-        <a href="#" className="flex items-center gap-3 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#df4f00] rounded-xl">
-          <img src="/assets/images/logo.png" alt="UniMates Logo" className="h-10 w-auto" />
-          <span className="font-display font-bold text-xl tracking-tight text-zinc-900 hidden sm:inline-block">UniMates</span>
-        </a>
+    <header className="fixed top-3 sm:top-5 inset-x-4 sm:inset-x-8 max-w-5xl mx-auto z-50">
+      {/* SVG Optical Magnifying Lens Filter */}
+      <svg className="absolute w-0 h-0 pointer-events-none" aria-hidden="true">
+        <defs>
+          <filter id="liquid-magnify" x="-20%" y="-20%" width="140%" height="140%">
+            <feTurbulence type="fractalNoise" baseFrequency="0.006 0.008" numOctaves="1" result="noise" />
+            <feDisplacementMap in="SourceGraphic" in2="noise" scale="24" xChannelSelector="R" yChannelSelector="G" />
+          </filter>
+        </defs>
+      </svg>
 
-        {/* Desktop Nav Links */}
-        <div className="hidden md:flex items-center gap-8">
-          {links.map((link) => (
-            <a
-              key={link.name}
-              href={link.href}
-              className="text-sm font-medium text-zinc-600 hover:text-[#df4f00] transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#df4f00] rounded-lg px-2 py-1"
-            >
-              {link.name}
-            </a>
-          ))}
-        </div>
+      {/* Ultra-Clear Magnifying Apple VisionOS Liquid Glass Pill */}
+      <div className="relative rounded-full border border-white/80 bg-white/10 hover:bg-white/15 backdrop-blur-md backdrop-saturate-[2.5] backdrop-contrast-110 shadow-[0_16px_40px_rgba(0,0,0,0.1),inset_0_2px_4px_rgba(255,255,255,0.95),inset_0_-2px_4px_rgba(255,255,255,0.45),inset_4px_0_12px_rgba(255,140,80,0.25),inset_-4px_0_12px_rgba(100,180,255,0.25)] transition-all duration-300 group overflow-hidden">
+        
+        {/* Crystal-clear dispersion & glint highlights */}
+        <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-[#df4f00]/10 via-transparent to-blue-500/10 opacity-35 pointer-events-none" />
+        <div className="absolute top-0 inset-x-8 h-[1.5px] bg-gradient-to-r from-transparent via-white to-transparent opacity-95 pointer-events-none" />
+        <div className="absolute top-1 inset-x-14 h-[2px] bg-gradient-to-r from-transparent via-[#df4f00]/40 to-transparent blur-sm opacity-60 pointer-events-none" />
+        <div className="absolute bottom-0 inset-x-12 h-[1px] bg-gradient-to-r from-transparent via-white/80 to-transparent pointer-events-none" />
 
-        {/* Desktop CTA */}
-        <div className="hidden md:flex items-center gap-4">
-          <a
-            href="https://linktr.ee/unimatesteam"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-6 py-3 bg-[#df4f00] text-white rounded-full font-semibold text-sm shadow-lg shadow-[#df4f00]/20 hover:bg-[#c64600] transition-all duration-300 hover:scale-105 active:scale-95 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#df4f00]"
-          >
-            <span>Download App</span>
-            <Download className="w-4 h-4" />
+        <nav className="relative z-10 px-5 sm:px-7 h-14 sm:h-16 flex items-center justify-between">
+          {/* Logo */}
+          <a href="#" className="flex items-center gap-2.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#df4f00] rounded-full group/logo">
+            <div className="relative">
+              <img src="/assets/images/logo.png" alt="UniMates Logo" className="h-9 w-auto drop-shadow-sm group-hover/logo:scale-105 transition-transform" />
+            </div>
+            <span className="font-display font-bold text-lg tracking-tight text-zinc-900 hidden sm:inline-block">UniMates</span>
           </a>
-        </div>
 
-        {/* Mobile Menu Button */}
-        <button
-          onClick={() => setIsOpen(!isOpen)}
-          aria-label={isOpen ? "Close navigation menu" : "Open navigation menu"}
-          className="md:hidden p-2 rounded-xl text-zinc-700 hover:bg-zinc-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#df4f00]"
-        >
-          {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-        </button>
-      </nav>
+          {/* Desktop Nav Links */}
+          <div className="hidden md:flex items-center gap-1">
+            {links.map((link) => (
+              <a
+                key={link.name}
+                href={link.href}
+                className="text-sm font-semibold text-zinc-700 hover:text-[#df4f00] hover:bg-white/50 transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#df4f00] rounded-full px-4 py-1.5"
+              >
+                {link.name}
+              </a>
+            ))}
+          </div>
 
-      {/* Mobile Menu Dropdown */}
+          {/* Desktop CTA */}
+          <div className="hidden md:flex items-center">
+            <a
+              href="https://linktr.ee/unimatesteam"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-[#df4f00] to-[#ff6314] text-white rounded-full font-semibold text-xs sm:text-sm shadow-md shadow-[#df4f00]/20 hover:shadow-lg hover:shadow-[#df4f00]/35 hover:scale-105 active:scale-95 transition-all duration-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#df4f00]"
+            >
+              <span>Download App</span>
+              <Download className="w-3.5 h-3.5" />
+            </a>
+          </div>
+
+          {/* Mobile Menu Button */}
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            aria-label={isOpen ? "Close navigation menu" : "Open navigation menu"}
+            className="md:hidden p-2 rounded-full text-zinc-700 hover:bg-white/50 border border-transparent hover:border-white/50 transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#df4f00]"
+          >
+            {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+          </button>
+        </nav>
+      </div>
+
+      {/* Floating Glass Mobile Menu Dropdown */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            className="md:hidden border-b border-zinc-200 bg-white px-6 py-6 shadow-xl overflow-hidden"
+            initial={{ opacity: 0, y: -8, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -8, scale: 0.98 }}
+            transition={{ duration: 0.2 }}
+            className="absolute top-full mt-3 inset-x-0 rounded-3xl border border-white/60 bg-white/40 backdrop-blur-2xl shadow-xl p-5 overflow-hidden"
           >
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-2">
               {links.map((link) => (
                 <a
                   key={link.name}
                   href={link.href}
                   onClick={() => setIsOpen(false)}
-                  className="text-base font-semibold text-zinc-800 hover:text-[#df4f00] py-2 border-b border-zinc-100"
+                  className="text-base font-semibold text-zinc-800 hover:text-[#df4f00] py-2.5 px-4 rounded-2xl hover:bg-white/60 transition-colors"
                 >
                   {link.name}
                 </a>
@@ -82,7 +105,7 @@ export default function Navbar() {
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => setIsOpen(false)}
-                className="mt-2 w-full py-3 bg-[#df4f00] text-white text-center rounded-full font-bold text-sm shadow-md flex items-center justify-center gap-2"
+                className="mt-2 w-full py-3 bg-gradient-to-r from-[#df4f00] to-[#ff6314] text-white text-center rounded-full font-bold text-sm shadow-md flex items-center justify-center gap-2"
               >
                 <span>Download App</span>
                 <Download className="w-4 h-4" />

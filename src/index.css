@@ -85,6 +85,26 @@ html.lenis, html.lenis body {
 .animate-float-2 { animation: float-2 25s ease-in-out infinite; }
 .animate-float-3 { animation: float-3 30s ease-in-out infinite; }
 
+/* React Bits Silky Aurora Wave Keyframes */
+@keyframes aurora-wave-1 {
+  0%, 100% { transform: translate(-5%, -5%) rotate(-8deg) scaleX(1.15) scaleY(0.95); }
+  50% { transform: translate(8%, 6%) rotate(12deg) scaleX(1.35) scaleY(1.15); }
+}
+
+@keyframes aurora-wave-2 {
+  0%, 100% { transform: translate(6%, -8%) rotate(10deg) scaleX(1.2) scaleY(1.05); }
+  50% { transform: translate(-8%, 8%) rotate(-12deg) scaleX(0.95) scaleY(1.25); }
+}
+
+@keyframes aurora-wave-3 {
+  0%, 100% { transform: translate(0%, 5%) rotate(-5deg) scale(1); }
+  50% { transform: translate(-10%, -6%) rotate(8deg) scale(1.25); }
+}
+
+.animate-aurora-1 { animation: aurora-wave-1 22s ease-in-out infinite; }
+.animate-aurora-2 { animation: aurora-wave-2 26s ease-in-out infinite; }
+.animate-aurora-3 { animation: aurora-wave-3 30s ease-in-out infinite; }
+
 @keyframes spin-slow {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
@@ -98,4 +118,23 @@ html.lenis, html.lenis body {
 .animate-gradient-x {
   background-size: 200% auto;
   animation: gradient-x 4s ease infinite;
+}
+
+/* UI Trend #2: Prismatic Holographic Foil Shimmer */
+@keyframes prismatic-shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.badge-prismatic {
+  background: linear-gradient(
+    110deg,
+    rgba(223, 79, 0, 0.12) 20%,
+    rgba(255, 255, 255, 0.95) 45%,
+    rgba(160, 215, 255, 0.85) 50%,
+    rgba(255, 200, 150, 0.85) 55%,
+    rgba(223, 79, 0, 0.12) 80%
+  );
+  background-size: 250% 100%;
+  animation: prismatic-shimmer 4.5s infinite linear;
 }

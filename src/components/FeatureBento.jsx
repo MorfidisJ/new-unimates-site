@@ -55,8 +55,12 @@ function SmartMatchingVisual() {
   }, []);
 
   return (
-    <div className="my-6 p-5 sm:p-6 rounded-3xl bg-zinc-50/90 border border-zinc-200/80 shadow-inner flex flex-col justify-between relative overflow-hidden group/visual">
-      {/* Top Switcher */}
+    <div className="relative my-6 p-5 sm:p-6 rounded-3xl bg-white/40 hover:bg-white/50 backdrop-blur-lg border border-white/70 shadow-sm flex flex-col justify-between overflow-hidden group/visual transition-all duration-300">
+      {/* Subtle glass top reflection */}
+      <div className="absolute top-0 inset-x-8 h-[1px] bg-gradient-to-r from-transparent via-white to-transparent opacity-80 pointer-events-none" />
+      <div className="relative z-10">
+
+        {/* Top Switcher */}
       <div className="flex items-center justify-end pb-3 border-b border-zinc-200/60 mb-4">
         <button
           onClick={nextExample}
@@ -121,6 +125,7 @@ function SmartMatchingVisual() {
           </div>
         </motion.div>
       </AnimatePresence>
+      </div>
     </div>
   );
 }
@@ -167,42 +172,65 @@ const FEATURES = [
   },
 ];
 
+/* UI Trend #1: Cursor Surface Spotlight & Edge Lighting Card Component */
+function BentoCard({ feature }) {
+  const [mouse, setMouse] = useState({ x: 0, y: 0 });
+  const Icon = feature.icon;
+  const isSmartMatching = feature.title === 'Smart Matching';
+
+  const handleMouseMove = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    setMouse({ x: e.clientX - rect.left, y: e.clientY - rect.top });
+  };
+
+  return (
+    <article
+      onMouseMove={handleMouseMove}
+      className={`relative rounded-[2.5rem] bg-white/40 hover:bg-white/50 backdrop-blur-xl border border-white/70 p-8 flex flex-col justify-between shadow-[0_12px_32px_rgba(0,0,0,0.06),inset_0_1px_1px_rgba(255,255,255,0.85)] transition-all duration-500 hover:shadow-[0_16px_36px_rgba(0,0,0,0.08),inset_0_1px_1px_rgba(255,255,255,1)] hover:-translate-y-1 group overflow-hidden ${feature.size ?? ''}`}
+    >
+      {/* UI Trend #1: Quiet Surface Cursor Spotlight */}
+      <div
+        className="pointer-events-none absolute -inset-px rounded-[2.5rem] opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+        style={{
+          background: `radial-gradient(400px circle at ${mouse.x}px ${mouse.y}px, rgba(223, 79, 0, 0.12), transparent 65%)`,
+        }}
+      />
+
+      {/* Subtle quiet glass rim highlight */}
+      <div className="absolute top-0 inset-x-10 h-[1px] bg-gradient-to-r from-transparent via-white to-transparent opacity-80 pointer-events-none" />
+
+      <div className="relative z-10">
+        <div className="flex items-start justify-between">
+          <span 
+            aria-hidden="true" 
+            className={`w-14 h-14 rounded-2xl flex items-center justify-center border border-white/70 shadow-sm transition-transform duration-300 group-hover:scale-110 ${feature.iconColor}`}
+          >
+            <Icon className="w-7 h-7" />
+          </span>
+          {feature.badge && (
+            <span className="text-xs font-bold uppercase tracking-wider px-3.5 py-1 rounded-full bg-white/60 border border-white/80 shadow-sm text-[#df4f00]">
+              {feature.badge}
+            </span>
+          )}
+        </div>
+
+        {isSmartMatching && <SmartMatchingVisual />}
+      </div>
+
+      <div className={`relative z-10 ${isSmartMatching ? 'mt-4' : 'mt-8'}`}>
+        <h3 className="text-2xl font-bold text-zinc-900 tracking-tight">{feature.title}</h3>
+        <p className="text-zinc-600 mt-3 text-sm md:text-base leading-relaxed">{feature.body}</p>
+      </div>
+    </article>
+  );
+}
+
 export default function FeatureBento() {
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto p-4">
-      {FEATURES.map((f) => {
-        const Icon = f.icon;
-        const isSmartMatching = f.title === 'Smart Matching';
-        return (
-          <article
-            key={f.title}
-            className={`rounded-[2.5rem] bg-white border border-zinc-200/80 p-8 flex flex-col justify-between transition-all duration-300 hover:shadow-xl hover:-translate-y-1 group ${f.size ?? ''} ${f.accent ?? ''}`}
-          >
-            <div>
-              <div className="flex items-start justify-between">
-                <span 
-                  aria-hidden="true" 
-                  className={`w-14 h-14 rounded-2xl flex items-center justify-center border transition-transform duration-300 group-hover:scale-110 ${f.iconColor}`}
-                >
-                  <Icon className="w-7 h-7" />
-                </span>
-                {f.badge && (
-                  <span className="text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-[#df4f00] text-white shadow-md shadow-[#df4f00]/20">
-                    {f.badge}
-                  </span>
-                )}
-              </div>
-
-              {isSmartMatching && <SmartMatchingVisual />}
-            </div>
-
-            <div className={isSmartMatching ? 'mt-4' : 'mt-8'}>
-              <h3 className="text-2xl font-bold text-zinc-900 tracking-tight">{f.title}</h3>
-              <p className="text-zinc-600 mt-3 text-sm md:text-base leading-relaxed">{f.body}</p>
-            </div>
-          </article>
-        );
-      })}
+      {FEATURES.map((f) => (
+        <BentoCard key={f.title} feature={f} />
+      ))}
     </div>
   );
 }

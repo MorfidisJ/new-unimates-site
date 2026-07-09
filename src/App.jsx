@@ -12,23 +12,16 @@ import PressArticles from './components/PressArticles';
 import InstagramFeed from './components/InstagramFeed';
 import PressMarquee from './components/PressMarquee';
 import Footer from './components/Footer';
+import SoftAurora from './components/SoftAurora';
+import TrueFocus from './components/TrueFocus';
 import { Download, Sparkles, ShieldCheck, HeartHandshake } from 'lucide-react';
 
 export default function App() {
   return (
     <SmoothScroll>
       <div className="min-h-screen flex flex-col bg-[#f9f6f0] text-[#0a1628] selection:bg-[#df4f00] selection:text-white font-sans relative overflow-x-hidden">
-        {/* Ambient Breathing Orange & Violet Blurred Balls */}
-        <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
-          {/* Warm Orange spheres */}
-          <div className="absolute top-[5%] -left-[10%] w-[350px] sm:w-[500px] h-[350px] sm:h-[500px] bg-[#df4f00]/15 rounded-full blur-[90px] animate-float-1" />
-          <div className="absolute top-[45%] -right-[10%] w-[400px] sm:w-[550px] h-[400px] sm:h-[550px] bg-[#df4f00]/12 rounded-full blur-[100px] animate-float-2" />
-          <div className="absolute bottom-[15%] left-[10%] w-[350px] sm:w-[500px] h-[350px] sm:h-[500px] bg-[#df4f00]/15 rounded-full blur-[90px] animate-float-3" />
-
-          {/* Complementary Violet & Purple spheres */}
-          <div className="absolute top-[20%] right-[5%] w-[350px] sm:w-[480px] h-[350px] sm:h-[480px] bg-violet-600/15 rounded-full blur-[95px] animate-float-3" />
-          <div className="absolute top-[65%] left-[5%] w-[380px] sm:w-[520px] h-[380px] sm:h-[520px] bg-purple-600/12 rounded-full blur-[100px] animate-float-1" />
-        </div>
+        {/* React Bits Idea #2: Soft Aurora Ambient Light Field */}
+        <SoftAurora />
 
         <Navbar />
 
@@ -50,6 +43,14 @@ export default function App() {
               <p className="text-lg sm:text-xl text-zinc-600 max-w-xl mx-auto lg:mx-0 font-normal leading-relaxed">
                 Swipe right for verified university flatmates, safe student accommodations, and thriving youth communities in Ioannina and across Greece.
               </p>
+
+              {/* React Bits Idea #1: True Focus Optical Interactive Pillars */}
+              <div className="pt-1">
+                <TrueFocus
+                  sentence="Verified Students • ML Match • Secure Housing • Student Community"
+                  separator="•"
+                />
+              </div>
 
               <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-4">
                 {/* Primary CTA uses MagneticButton */}
