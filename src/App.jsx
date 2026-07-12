@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import SmoothScroll from './components/SmoothScroll';
 import Navbar from './components/Navbar';
 import TextReveal from './components/TextReveal';
@@ -15,9 +16,42 @@ import Footer from './components/Footer';
 import SoftAurora from './components/SoftAurora';
 import TrueFocus from './components/TrueFocus';
 import Seo from './components/Seo';
+import SecretLinktree from './components/SecretLinktree';
 import { Download, Sparkles, ShieldCheck, HeartHandshake } from 'lucide-react';
 
 export default function App() {
+  const [currentPath, setCurrentPath] = useState(() => window.location.pathname);
+  const [searchParams, setSearchParams] = useState(() => new URLSearchParams(window.location.search));
+
+  useEffect(() => {
+    const handleLocationChange = () => {
+      setCurrentPath(window.location.pathname);
+      setSearchParams(new URLSearchParams(window.location.search));
+    };
+
+    window.addEventListener('popstate', handleLocationChange);
+    return () => window.removeEventListener('popstate', handleLocationChange);
+  }, []);
+
+  const secretPaths = ['/links', '/linktree', '/unimatesteam', '/connect', '/bio', '/socials'];
+  const normalizedPath = currentPath.toLowerCase().replace(/\/$/, '') || '/';
+  const isSecretPage =
+    secretPaths.includes(normalizedPath) ||
+    secretPaths.some((path) => normalizedPath.startsWith(path + '/')) ||
+    ['links', 'linktree', 'unimatesteam', 'connect', 'bio'].includes(
+      searchParams.get('page')?.toLowerCase()
+    );
+
+  const navigateToHome = () => {
+    window.history.pushState({}, '', '/');
+    setCurrentPath('/');
+    setSearchParams(new URLSearchParams(''));
+  };
+
+  if (isSecretPage) {
+    return <SecretLinktree onNavigateHome={navigateToHome} />;
+  }
+
   return (
     <SmoothScroll>
       <Seo
