@@ -14,6 +14,8 @@ const routes = [
   { path: '/#how-it-works', priority: '0.8', changefreq: 'monthly' },
   { path: '/#press', priority: '0.7', changefreq: 'weekly' },
   { path: '/#download', priority: '0.9', changefreq: 'monthly' },
+  { path: '/privacy-policy', priority: '0.6', changefreq: 'monthly' },
+  { path: '/support', priority: '0.7', changefreq: 'monthly' },
 ];
 
 function generateSitemap() {

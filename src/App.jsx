@@ -17,6 +17,9 @@ import SoftAurora from './components/SoftAurora';
 import TrueFocus from './components/TrueFocus';
 import Seo from './components/Seo';
 import SecretLinktree from './components/SecretLinktree';
+import PrivacyPolicyPage from './components/PrivacyPolicyPage';
+import ContactSupportPage from './components/ContactSupportPage';
+import DiscordCommunitySection from './components/DiscordCommunitySection';
 import { Download, Sparkles, ShieldCheck, HeartHandshake } from 'lucide-react';
 
 export default function App() {
@@ -27,10 +30,15 @@ export default function App() {
     const handleLocationChange = () => {
       setCurrentPath(window.location.pathname);
       setSearchParams(new URLSearchParams(window.location.search));
+      window.scrollTo(0, 0);
     };
 
     window.addEventListener('popstate', handleLocationChange);
-    return () => window.removeEventListener('popstate', handleLocationChange);
+    window.addEventListener('navigate', handleLocationChange);
+    return () => {
+      window.removeEventListener('popstate', handleLocationChange);
+      window.removeEventListener('navigate', handleLocationChange);
+    };
   }, []);
 
   const secretPaths = ['/links', '/linktree', '/unimatesteam', '/connect', '/bio', '/socials'];
@@ -42,14 +50,39 @@ export default function App() {
       searchParams.get('page')?.toLowerCase()
     );
 
+  const privacyPaths = ['/privacy', '/privacy-policy', '/privacy-policy.html', '/privacy.html'];
+  const isPrivacyPage =
+    privacyPaths.includes(normalizedPath) ||
+    privacyPaths.some((path) => normalizedPath.startsWith(path + '/')) ||
+    ['privacy', 'privacy-policy', 'privacypolicy'].includes(
+      searchParams.get('page')?.toLowerCase()
+    );
+
   const navigateToHome = () => {
     window.history.pushState({}, '', '/');
     setCurrentPath('/');
     setSearchParams(new URLSearchParams(''));
+    window.scrollTo(0, 0);
   };
+
+  const supportPaths = ['/support', '/contact', '/contact-us', '/help'];
+  const isSupportPage =
+    supportPaths.includes(normalizedPath) ||
+    supportPaths.some((path) => normalizedPath.startsWith(path + '/')) ||
+    ['support', 'contact', 'help'].includes(
+      searchParams.get('page')?.toLowerCase()
+    );
 
   if (isSecretPage) {
     return <SecretLinktree onNavigateHome={navigateToHome} />;
+  }
+
+  if (isPrivacyPage) {
+    return <PrivacyPolicyPage onNavigateHome={navigateToHome} />;
+  }
+
+  if (isSupportPage) {
+    return <ContactSupportPage onNavigateHome={navigateToHome} />;
   }
 
   return (
@@ -173,6 +206,9 @@ export default function App() {
 
           {/* Instagram Community Feed */}
           <InstagramFeed />
+
+          {/* Official Discord Community Server CTA */}
+          <DiscordCommunitySection />
         </main>
 
         <Footer />
