@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import {
-  ExternalLink,
   Check,
   Copy,
   ArrowRight,
@@ -9,8 +8,9 @@ import {
   Palette,
   BookOpen,
   MapPin,
-  Lightbulb,
-  PartyPopper
+  Home,
+  Users,
+  ShieldCheck
 } from 'lucide-react';
 
 function DiscordIcon({ className = 'w-5 h-5' }) {
@@ -21,244 +21,285 @@ function DiscordIcon({ className = 'w-5 h-5' }) {
   );
 }
 
-export default function DiscordCommunitySection() {
-  const [copied, setCopied] = useState(false);
-  const discordUrl = 'https://discord.gg/huHkhT5cwd';
+function FacebookIcon({ className = 'w-5 h-5' }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" className={className}>
+      <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+    </svg>
+  );
+}
 
-  const handleCopyLink = () => {
+export default function DiscordCommunitySection() {
+  const [copiedDiscord, setCopiedDiscord] = useState(false);
+  const [copiedFb, setCopiedFb] = useState(false);
+
+  const discordUrl = 'https://discord.gg/huHkhT5cwd';
+  const facebookUrl = 'https://www.facebook.com/groups/2500842557035055/';
+
+  const handleCopyDiscord = () => {
     navigator.clipboard.writeText(discordUrl);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    setCopiedDiscord(true);
+    setTimeout(() => setCopiedDiscord(false), 2000);
+  };
+
+  const handleCopyFb = () => {
+    navigator.clipboard.writeText(facebookUrl);
+    setCopiedFb(true);
+    setTimeout(() => setCopiedFb(false), 2000);
   };
 
   return (
     <section className="py-20 max-w-7xl mx-auto px-6 relative z-10">
-      <div className="relative rounded-3xl bg-white/95 backdrop-blur-xl border border-zinc-200/80 p-8 sm:p-14 lg:p-16 shadow-xl overflow-hidden">
-        {/* Soft Ambient Glows */}
-        <div className="absolute -top-32 -left-32 w-80 h-80 bg-[#df4f00]/10 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute -bottom-32 -right-32 w-80 h-80 bg-violet-500/10 rounded-full blur-3xl pointer-events-none" />
+      {/* Section Header */}
+      <div className="text-center max-w-3xl mx-auto mb-14 space-y-4">
+        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-zinc-100 border border-zinc-200/80 text-zinc-700 text-xs sm:text-sm font-bold tracking-wide shadow-2xs">
+          <Sparkles className="w-4 h-4 text-[#df4f00]" />
+          <span>Official Student Communities</span>
+        </div>
 
-        <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-          {/* Left Column: Value Proposition & Editorial Story */}
-          <div className="lg:col-span-6 space-y-6 text-center lg:text-left">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-violet-50 border border-violet-200/80 text-violet-700 text-xs sm:text-sm font-bold tracking-wide shadow-2xs">
-              <DiscordIcon className="w-4 h-4 text-violet-600" />
-              <span>Official Student Community Space</span>
-            </div>
+        <h2 className="text-3xl sm:text-5xl font-bold tracking-tight text-zinc-900 font-display leading-[1.12]">
+          Join Our Official{' '}
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-600 via-purple-600 to-[#1877F2]">
+            Student Network
+          </span>
+        </h2>
 
-            <h2 className="text-3xl sm:text-5xl font-bold tracking-tight text-zinc-900 font-display leading-[1.12]">
-              Welcome to{' '}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-600 via-purple-600 to-[#df4f00]">
-                The Living Room
-              </span>
-            </h2>
+        <p className="text-base sm:text-lg text-zinc-600 leading-relaxed">
+          Whether you want real-time campus chat on Discord or verified roommate listings on Facebook, connect with students across Greece.
+        </p>
+      </div>
 
-            <p className="text-base sm:text-lg text-zinc-600 leading-relaxed max-w-xl mx-auto lg:mx-0">
-              Step inside our official student server. Whether you want to connect with peers in your city, share aesthetic room inspiration, get university survival tips, or give early feature ideas directly to our founders—you belong here.
-            </p>
+      {/* Bento Box Grid of Two */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
+        {/* Bento Box 1: Discord Server */}
+        <div className="relative rounded-3xl bg-white/95 backdrop-blur-xl border border-zinc-200/80 hover:border-violet-300 p-8 sm:p-10 shadow-xl hover:shadow-2xl transition-all duration-300 flex flex-col justify-between overflow-hidden group">
+          {/* Ambient Glow */}
+          <div className="absolute -top-24 -right-24 w-64 h-64 bg-violet-500/10 rounded-full blur-3xl pointer-events-none group-hover:bg-violet-500/15 transition-all duration-500" />
 
-            {/* Editorial Feature Highlights based on real server spaces */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 pt-2 text-left">
-              <div className="flex items-start gap-3 bg-zinc-50 border border-zinc-200/70 rounded-2xl p-4">
-                <div className="w-8 h-8 rounded-xl bg-violet-100 text-violet-600 flex items-center justify-center shrink-0">
-                  <MapPin className="w-4 h-4" />
+          <div className="space-y-6 relative z-10">
+            {/* Card Header */}
+            <div className="flex items-center justify-between gap-4 pb-5 border-b border-zinc-200/70">
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 rounded-2xl bg-[#5865F2] text-white flex items-center justify-center shadow-md shrink-0">
+                  <DiscordIcon className="w-6 h-6" />
                 </div>
                 <div>
-                  <h4 className="font-bold text-zinc-900 text-sm">📍 city-chat</h4>
-                  <p className="text-xs text-zinc-500 mt-0.5">
-                    Connect with students across Ioannina and Greek university cities.
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-3 bg-zinc-50 border border-zinc-200/70 rounded-2xl p-4">
-                <div className="w-8 h-8 rounded-xl bg-pink-100 text-pink-600 flex items-center justify-center shrink-0">
-                  <Palette className="w-4 h-4" />
-                </div>
-                <div>
-                  <h4 className="font-bold text-zinc-900 text-sm">🎨 mood-boards</h4>
-                  <p className="text-xs text-zinc-500 mt-0.5">
-                    Share dorm decoration ideas, study setups &amp; aesthetic room layouts.
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-3 bg-zinc-50 border border-zinc-200/70 rounded-2xl p-4">
-                <div className="w-8 h-8 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center shrink-0">
-                  <BookOpen className="w-4 h-4" />
-                </div>
-                <div>
-                  <h4 className="font-bold text-zinc-900 text-sm">📚 uni-survival</h4>
-                  <p className="text-xs text-zinc-500 mt-0.5">
-                    Exam tips, campus guides, lecture notes &amp; student life hacks.
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-3 bg-zinc-50 border border-zinc-200/70 rounded-2xl p-4">
-                <div className="w-8 h-8 rounded-xl bg-[#df4f00]/10 text-[#df4f00] flex items-center justify-center shrink-0">
-                  <Sparkles className="w-4 h-4" />
-                </div>
-                <div>
-                  <h4 className="font-bold text-zinc-900 text-sm">✨ feature-ideas</h4>
-                  <p className="text-xs text-zinc-500 mt-0.5">
-                    Help shape the future of UniMates with direct founder feedback.
+                  <div className="flex items-center gap-2">
+                    <h3 className="font-display font-bold text-lg text-zinc-900">
+                      UniMates Community
+                    </h3>
+                    <span className="px-2 py-0.5 rounded-md bg-[#5865F2]/10 text-[#5865F2] font-bold text-[10px] uppercase tracking-wider whitespace-nowrap">
+                      Official Server
+                    </span>
+                  </div>
+                  <p className="text-xs text-zinc-500 font-medium mt-0.5">
+                    Discord • The Living Room
                   </p>
                 </div>
               </div>
             </div>
 
-            {/* CTA Buttons */}
-            <div className="pt-4 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3.5">
-              <a
-                href={discordUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full sm:w-auto px-8 py-4 rounded-full bg-[#0a1628] hover:bg-[#df4f00] text-white font-bold text-sm sm:text-base shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center gap-2.5"
-              >
-                <DiscordIcon className="w-5 h-5" />
-                <span>Join Official Discord Server</span>
-                <ArrowRight className="w-4 h-4" />
-              </a>
+            {/* Title & Description */}
+            <div className="space-y-2.5">
+              <h4 className="text-2xl font-bold font-display text-zinc-900">
+                Real-Time Campus Chat &amp; Hangouts
+              </h4>
+              <p className="text-sm text-zinc-600 leading-relaxed">
+                Step inside our official student server. Connect with peers in your university city, share aesthetic room decor inspiration, get campus survival hacks, and discuss ideas with our founders.
+              </p>
+            </div>
 
-              <button
-                onClick={handleCopyLink}
-                className="w-full sm:w-auto px-6 py-4 rounded-full bg-zinc-100 hover:bg-zinc-200 border border-zinc-200/80 text-zinc-800 font-semibold text-xs sm:text-sm transition-all flex items-center justify-center gap-2"
-              >
-                {copied ? (
-                  <>
-                    <Check className="w-4 h-4 text-emerald-600" />
-                    <span className="text-emerald-700 font-bold">Invite Link Copied!</span>
-                  </>
-                ) : (
-                  <>
-                    <Copy className="w-4 h-4 text-zinc-500" />
-                    <span>Copy Invite Link</span>
-                  </>
-                )}
-              </button>
+            {/* Bento Inner Feature Grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+              <div className="bg-zinc-50 border border-zinc-200/70 rounded-2xl p-3.5 space-y-1">
+                <div className="flex items-center gap-2 text-xs font-bold text-zinc-900">
+                  <MapPin className="w-4 h-4 text-violet-600" />
+                  <span>📍 city-chat</span>
+                </div>
+                <p className="text-xs text-zinc-500">
+                  Connect with students across Greek university cities.
+                </p>
+              </div>
+
+              <div className="bg-zinc-50 border border-zinc-200/70 rounded-2xl p-3.5 space-y-1">
+                <div className="flex items-center gap-2 text-xs font-bold text-zinc-900">
+                  <Palette className="w-4 h-4 text-pink-600" />
+                  <span>🎨 mood-boards</span>
+                </div>
+                <p className="text-xs text-zinc-500">
+                  Share dorm decor ideas &amp; aesthetic room layouts.
+                </p>
+              </div>
+
+              <div className="bg-zinc-50 border border-zinc-200/70 rounded-2xl p-3.5 space-y-1">
+                <div className="flex items-center gap-2 text-xs font-bold text-zinc-900">
+                  <BookOpen className="w-4 h-4 text-amber-600" />
+                  <span>📚 uni-survival</span>
+                </div>
+                <p className="text-xs text-zinc-500">
+                  Exam tips, lecture notes &amp; student life hacks.
+                </p>
+              </div>
+
+              <div className="bg-zinc-50 border border-zinc-200/70 rounded-2xl p-3.5 space-y-1">
+                <div className="flex items-center gap-2 text-xs font-bold text-zinc-900">
+                  <MessageCircle className="w-4 h-4 text-purple-600" />
+                  <span>💬 general-chat</span>
+                </div>
+                <p className="text-xs text-zinc-500">
+                  Daily student banter &amp; new peer introductions.
+                </p>
+              </div>
             </div>
           </div>
 
-          {/* Right Column: Clean Editorial Spaces Showcase matching real server */}
-          <div className="lg:col-span-6">
-            <div className="rounded-3xl bg-zinc-50/90 border border-zinc-200/80 p-6 sm:p-8 shadow-sm space-y-6">
-              {/* Header */}
-              <div className="flex items-center justify-between pb-4 border-b border-zinc-200/70">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-2xl bg-violet-600 flex items-center justify-center text-white shadow-sm">
-                    <DiscordIcon className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <h4 className="font-display font-bold text-base text-zinc-900">
-                      UniMates Server Spaces
-                    </h4>
-                    <p className="text-xs text-zinc-500 font-medium">
-                      Student-led rooms designed for connection
-                    </p>
-                  </div>
+          {/* CTA Buttons */}
+          <div className="pt-8 flex flex-col sm:flex-row items-center gap-3 relative z-10">
+            <a
+              href={discordUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full sm:flex-1 px-6 py-3.5 rounded-2xl bg-[#0a1628] hover:bg-[#5865F2] text-white font-bold text-sm shadow-md hover:shadow-lg transition-all duration-300 flex items-center justify-center gap-2"
+            >
+              <DiscordIcon className="w-4 h-4" />
+              <span>Join Discord Server</span>
+              <ArrowRight className="w-4 h-4" />
+            </a>
+
+            <button
+              onClick={handleCopyDiscord}
+              className="w-full sm:w-auto px-5 py-3.5 rounded-2xl bg-zinc-100 hover:bg-zinc-200 border border-zinc-200/80 text-zinc-700 font-semibold text-xs transition-all flex items-center justify-center gap-2 shrink-0"
+            >
+              {copiedDiscord ? (
+                <>
+                  <Check className="w-4 h-4 text-emerald-600" />
+                  <span className="text-emerald-700 font-bold">Copied!</span>
+                </>
+              ) : (
+                <>
+                  <Copy className="w-4 h-4 text-zinc-500" />
+                  <span>Copy Link</span>
+                </>
+              )}
+            </button>
+          </div>
+        </div>
+
+        {/* Bento Box 2: Facebook Group */}
+        <div className="relative rounded-3xl bg-white/95 backdrop-blur-xl border border-zinc-200/80 hover:border-blue-300 p-8 sm:p-10 shadow-xl hover:shadow-2xl transition-all duration-300 flex flex-col justify-between overflow-hidden group">
+          {/* Ambient Glow */}
+          <div className="absolute -top-24 -right-24 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl pointer-events-none group-hover:bg-blue-500/15 transition-all duration-500" />
+
+          <div className="space-y-6 relative z-10">
+            {/* Card Header */}
+            <div className="flex items-center justify-between gap-4 pb-5 border-b border-zinc-200/70">
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 rounded-2xl bg-[#1877F2] text-white flex items-center justify-center shadow-md shrink-0">
+                  <FacebookIcon className="w-6 h-6" />
                 </div>
-                <span className="text-xs font-bold px-3 py-1 rounded-full bg-emerald-100 text-emerald-800">
-                  Active Now
-                </span>
-              </div>
-
-              {/* Space 1: THE LIVING ROOM */}
-              <div className="space-y-3">
-                <div className="flex items-center gap-2">
-                  <span className="text-xs font-bold uppercase tracking-wider text-violet-700">
-                    🛋️ THE LIVING ROOM
-                  </span>
+                <div>
+                  <div className="flex items-center gap-2">
+                    <h3 className="font-display font-bold text-lg text-zinc-900">
+                      Συγκατοίκηση Ελλάδα
+                    </h3>
+                    <span className="px-2 py-0.5 rounded-md bg-[#1877F2]/10 text-[#1877F2] font-bold text-[10px] uppercase tracking-wider whitespace-nowrap">
+                      Official Group
+                    </span>
+                  </div>
+                  <p className="text-xs text-zinc-500 font-medium mt-0.5">
+                    Facebook • UniMates Greece
+                  </p>
                 </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                  <div className="bg-white rounded-2xl p-4 border border-zinc-200/70 shadow-2xs space-y-1.5 hover:border-violet-300 transition-all">
-                    <div className="flex items-center gap-2 text-xs font-bold text-zinc-900">
-                      <MapPin className="w-4 h-4 text-violet-600" />
-                      <span>📍 • city-chat</span>
-                    </div>
-                    <p className="text-xs text-zinc-500">
-                      Find students living or moving to your university city.
-                    </p>
-                  </div>
-
-                  <div className="bg-white rounded-2xl p-4 border border-zinc-200/70 shadow-2xs space-y-1.5 hover:border-violet-300 transition-all">
-                    <div className="flex items-center gap-2 text-xs font-bold text-zinc-900">
-                      <MessageCircle className="w-4 h-4 text-purple-600" />
-                      <span>💬 • general-chat</span>
-                    </div>
-                    <p className="text-xs text-zinc-500">
-                      Daily student banter, introductions &amp; campus life chat.
-                    </p>
-                  </div>
-
-                  <div className="bg-white rounded-2xl p-4 border border-zinc-200/70 shadow-2xs space-y-1.5 hover:border-violet-300 transition-all">
-                    <div className="flex items-center gap-2 text-xs font-bold text-zinc-900">
-                      <Palette className="w-4 h-4 text-pink-600" />
-                      <span>🎨 • mood-boards</span>
-                    </div>
-                    <p className="text-xs text-zinc-500">
-                      Room decor setups, desk aesthetics &amp; design vibes.
-                    </p>
-                  </div>
-
-                  <div className="bg-white rounded-2xl p-4 border border-zinc-200/70 shadow-2xs space-y-1.5 hover:border-violet-300 transition-all">
-                    <div className="flex items-center gap-2 text-xs font-bold text-zinc-900">
-                      <BookOpen className="w-4 h-4 text-amber-600" />
-                      <span>📚 • uni-survival</span>
-                    </div>
-                    <p className="text-xs text-zinc-500">
-                      Study tips, exam guides &amp; university survival hacks.
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Space 2: BETA FEEDBACK & EVENTS */}
-              <div className="space-y-3 pt-2 border-t border-zinc-200/70">
-                <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold uppercase tracking-wider text-[#df4f00]">
-                    🛠️ BETA FEEDBACK &amp; ROADMAP
-                  </span>
-                  <span className="text-[11px] font-semibold text-zinc-400">Founder Room</span>
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
-                  <div className="bg-white rounded-2xl p-3.5 border border-zinc-200/70 shadow-2xs flex items-center gap-2.5">
-                    <Sparkles className="w-4 h-4 text-[#df4f00] shrink-0" />
-                    <span className="text-xs font-bold text-zinc-800">✨ • feature-ideas</span>
-                  </div>
-
-                  <div className="bg-white rounded-2xl p-3.5 border border-zinc-200/70 shadow-2xs flex items-center gap-2.5">
-                    <Lightbulb className="w-4 h-4 text-amber-500 shrink-0" />
-                    <span className="text-xs font-bold text-zinc-800">💡 • feature-roadmap</span>
-                  </div>
-
-                  <div className="bg-white rounded-2xl p-3.5 border border-zinc-200/70 shadow-2xs flex items-center gap-2.5">
-                    <PartyPopper className="w-4 h-4 text-pink-500 shrink-0" />
-                    <span className="text-xs font-bold text-zinc-800">🎉 • events-promos</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Footer Banner Inside Card */}
-              <div className="bg-violet-50 border border-violet-200/70 rounded-2xl p-4 flex items-center justify-between gap-4">
-                <div className="text-xs text-violet-900 font-medium">
-                  Ready to join <strong className="font-bold">THE LIVING ROOM</strong>?
-                </div>
-                <a
-                  href={discordUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="px-4 py-2 rounded-xl bg-violet-600 hover:bg-violet-700 text-white font-bold text-xs shrink-0 transition-colors shadow-2xs"
-                >
-                  Enter Server →
-                </a>
               </div>
             </div>
+
+            {/* Title & Description */}
+            <div className="space-y-2.5">
+              <h4 className="text-2xl font-bold font-display text-zinc-900">
+                Verified Roommates &amp; Housing Posts
+              </h4>
+              <p className="text-sm text-zinc-600 leading-relaxed">
+                Η επίσημη κοινότητα του UniMates! Ψάχνεις συγκατοίκο; Connect with verified students looking for apartments and roommates across Greek universities without agency fees.
+              </p>
+            </div>
+
+            {/* Bento Inner Feature Grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+              <div className="bg-zinc-50 border border-zinc-200/70 rounded-2xl p-3.5 space-y-1">
+                <div className="flex items-center gap-2 text-xs font-bold text-zinc-900">
+                  <Home className="w-4 h-4 text-[#1877F2]" />
+                  <span>🏡 Roommate Search</span>
+                </div>
+                <p className="text-xs text-zinc-500">
+                  Post &amp; discover verified students searching for flats.
+                </p>
+              </div>
+
+              <div className="bg-zinc-50 border border-zinc-200/70 rounded-2xl p-3.5 space-y-1">
+                <div className="flex items-center gap-2 text-xs font-bold text-zinc-900">
+                  <Users className="w-4 h-4 text-emerald-600" />
+                  <span>🤝 Direct Contact</span>
+                </div>
+                <p className="text-xs text-zinc-500">
+                  Chat directly with peers—zero broker or agency costs.
+                </p>
+              </div>
+
+              <div className="bg-zinc-50 border border-zinc-200/70 rounded-2xl p-3.5 space-y-1">
+                <div className="flex items-center gap-2 text-xs font-bold text-zinc-900">
+                  <MapPin className="w-4 h-4 text-[#df4f00]" />
+                  <span>📍 Greek Uni Cities</span>
+                </div>
+                <p className="text-xs text-zinc-500">
+                  Active in Ioannina, Athens, Thessaloniki &amp; Patras.
+                </p>
+              </div>
+
+              <div className="bg-zinc-50 border border-zinc-200/70 rounded-2xl p-3.5 space-y-1">
+                <div className="flex items-center gap-2 text-xs font-bold text-zinc-900">
+                  <ShieldCheck className="w-4 h-4 text-violet-600" />
+                  <span>🛡️ Safe Community</span>
+                </div>
+                <p className="text-xs text-zinc-500">
+                  Moderated student space for a trusted experience.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* CTA Buttons */}
+          <div className="pt-8 flex flex-col sm:flex-row items-center gap-3 relative z-10">
+            <a
+              href={facebookUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full sm:flex-1 px-6 py-3.5 rounded-2xl bg-[#1877F2] hover:bg-[#1558B0] text-white font-bold text-sm shadow-md hover:shadow-lg transition-all duration-300 flex items-center justify-center gap-2"
+            >
+              <FacebookIcon className="w-4 h-4" />
+              <span>Join Facebook Group</span>
+              <ArrowRight className="w-4 h-4" />
+            </a>
+
+            <button
+              onClick={handleCopyFb}
+              className="w-full sm:w-auto px-5 py-3.5 rounded-2xl bg-zinc-100 hover:bg-zinc-200 border border-zinc-200/80 text-zinc-700 font-semibold text-xs transition-all flex items-center justify-center gap-2 shrink-0"
+            >
+              {copiedFb ? (
+                <>
+                  <Check className="w-4 h-4 text-emerald-600" />
+                  <span className="text-emerald-700 font-bold">Copied!</span>
+                </>
+              ) : (
+                <>
+                  <Copy className="w-4 h-4 text-zinc-500" />
+                  <span>Copy Link</span>
+                </>
+              )}
+            </button>
           </div>
         </div>
       </div>
     </section>
   );
 }
+

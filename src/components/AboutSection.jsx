@@ -3,7 +3,7 @@ import { HeartHandshake } from 'lucide-react';
 
 export default function AboutSection() {
   return (
-    <section id="about" className="py-24 bg-[#0a1628] text-white relative z-20 overflow-hidden my-12 rounded-[3rem] mx-4 sm:mx-6 max-w-7xl xl:mx-auto">
+    <section data-theme="dark" id="about" className="py-24 bg-[#0a1628] text-white relative z-20 overflow-hidden my-12 rounded-[3rem] mx-4 sm:mx-6 max-w-7xl xl:mx-auto">
       <div className="max-w-4xl mx-auto px-8 text-center relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

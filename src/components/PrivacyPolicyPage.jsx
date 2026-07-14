@@ -630,7 +630,7 @@ export default function PrivacyPolicyPage({ onNavigateHome }) {
 
           <div className="flex items-center gap-2.5">
             <img
-              src="/assets/images/logo.png"
+              src="/assets/images/simple_logo.png"
               alt="UniMates Logo"
               className="h-8 w-auto object-contain"
             />

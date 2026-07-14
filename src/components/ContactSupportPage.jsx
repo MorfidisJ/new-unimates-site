@@ -26,7 +26,7 @@ import {
 import SoftAurora from './SoftAurora';
 import Seo from './Seo';
 import Footer from './Footer';
-import DiscordCommunitySection from './DiscordCommunitySection';
+
 
 const FAQ_ITEMS = [
   {
@@ -116,6 +116,8 @@ export default function ContactSupportPage({ onNavigateHome }) {
   const [university, setUniversity] = useState('');
   const [message, setMessage] = useState('');
   const [formSubmitted, setFormSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState(null);
 
   // FAQ search & open states
   const [faqSearch, setFaqSearch] = useState('');
@@ -163,10 +165,57 @@ export default function ContactSupportPage({ onNavigateHome }) {
     return `mailto:info@unimates.net?subject=${subject}&body=${body}`;
   };
 
-  const handleSubmitForm = (e) => {
+  const handleSubmitForm = async (e) => {
     e.preventDefault();
-    window.location.href = generateMailtoLink();
-    setFormSubmitted(true);
+    const web3FormsKey = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY || import.meta.env.VITE_WEB3FORMS_KEY;
+
+    if (!web3FormsKey || web3FormsKey === 'your-web3forms-access-key-here') {
+      // Graceful fallback: if Web3Forms key isn't configured yet, launch the user's mailto client
+      window.location.href = generateMailtoLink();
+      setFormSubmitted(true);
+      return;
+    }
+
+    setIsSubmitting(true);
+    setSubmitError(null);
+
+    try {
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          access_key: web3FormsKey,
+          subject: `[UniMates Support] ${category} - ${name || 'Student'}`,
+          from_name: name || 'UniMates Student',
+          email: email,
+          category: category,
+          university: university || 'N/A',
+          message: message
+        })
+      });
+
+      const result = await response.json();
+      if (result.success) {
+        setFormSubmitted(true);
+        setName('');
+        setEmail('');
+        setUniversity('');
+        setMessage('');
+      } else {
+        throw new Error(result.message || 'Submission failed');
+      }
+    } catch (err) {
+      console.error('Web3Forms Error:', err);
+      setSubmitError('Direct server submission encountered an issue. Launching your email client as a backup...');
+      setTimeout(() => {
+        window.location.href = generateMailtoLink();
+      }, 1500);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleCopyMessageTemplate = () => {
@@ -201,7 +250,7 @@ export default function ContactSupportPage({ onNavigateHome }) {
 
           <div className="flex items-center gap-2.5">
             <img
-              src="/assets/images/logo.png"
+              src="/assets/images/simple_logo.png"
               alt="UniMates Logo"
               className="h-8 w-auto object-contain"
             />
@@ -443,10 +492,30 @@ export default function ContactSupportPage({ onNavigateHome }) {
               <div className="pt-2 flex flex-col sm:flex-row items-center gap-3">
                 <button
                   type="submit"
-                  className="w-full sm:w-auto flex-1 py-3.5 px-6 rounded-xl bg-[#df4f00] text-white font-bold text-sm shadow-lg shadow-[#df4f00]/25 hover:bg-[#c94500] transition-all flex items-center justify-center gap-2"
+                  disabled={isSubmitting}
+                  className={`w-full sm:w-auto flex-1 py-3.5 px-6 rounded-xl font-bold text-sm shadow-lg transition-all flex items-center justify-center gap-2 ${
+                    isSubmitting
+                      ? 'bg-zinc-400 text-white cursor-not-allowed shadow-none'
+                      : 'bg-[#df4f00] text-white shadow-[#df4f00]/25 hover:bg-[#c94500]'
+                  }`}
                 >
-                  <Send className="w-4 h-4" />
-                  <span>Launch Email to Support</span>
+                  {isSubmitting ? (
+                    <>
+                      <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                      <span>Sending Message...</span>
+                    </>
+                  ) : (
+                    <>
+                      <Send className="w-4 h-4" />
+                      <span>
+                        {(import.meta.env.VITE_WEB3FORMS_ACCESS_KEY || import.meta.env.VITE_WEB3FORMS_KEY) &&
+                        (import.meta.env.VITE_WEB3FORMS_ACCESS_KEY || import.meta.env.VITE_WEB3FORMS_KEY) !==
+                          'your-web3forms-access-key-here'
+                          ? 'Send Direct Message'
+                          : 'Launch Email to Support'}
+                      </span>
+                    </>
+                  )}
                 </button>
 
                 <button
@@ -476,14 +545,37 @@ export default function ContactSupportPage({ onNavigateHome }) {
                 >
                   <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0" />
                   <div>
-                    <strong className="font-bold">Email Client Opened!</strong> If your email client
-                    did not open automatically, click &quot;Copy Formatted Text&quot; above and mail
-                    us at{' '}
-                    <a href="mailto:info@unimates.net" className="font-bold underline">
-                      info@unimates.net
-                    </a>
-                    .
+                    {(import.meta.env.VITE_WEB3FORMS_ACCESS_KEY || import.meta.env.VITE_WEB3FORMS_KEY) &&
+                    (import.meta.env.VITE_WEB3FORMS_ACCESS_KEY || import.meta.env.VITE_WEB3FORMS_KEY) !==
+                      'your-web3forms-access-key-here' ? (
+                      <>
+                        <strong className="font-bold">Message Sent Successfully!</strong> Your message has
+                        been delivered directly to the UniMates support team. We will reply to your university email
+                        shortly!
+                      </>
+                    ) : (
+                      <>
+                        <strong className="font-bold">Email Client Opened!</strong> If your email client
+                        did not open automatically, click &quot;Copy Formatted Text&quot; above and mail
+                        us at{' '}
+                        <a href="mailto:info@unimates.net" className="font-bold underline">
+                          info@unimates.net
+                        </a>
+                        .
+                      </>
+                    )}
                   </div>
+                </motion.div>
+              )}
+
+              {submitError && (
+                <motion.div
+                  initial={{ opacity: 0, y: 5 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="p-4 rounded-xl bg-amber-50 border border-amber-200 text-xs sm:text-sm text-amber-800 flex items-center gap-3"
+                >
+                  <AlertCircle className="w-5 h-5 text-amber-600 shrink-0" />
+                  <div>{submitError}</div>
                 </motion.div>
               )}
             </form>
@@ -681,8 +773,6 @@ export default function ContactSupportPage({ onNavigateHome }) {
           </div>
         </section>
 
-        {/* Discord Server Invitation Section */}
-        <DiscordCommunitySection />
       </main>
 
       {/* Footer */}
